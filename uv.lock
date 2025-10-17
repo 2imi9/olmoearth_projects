@@ -3166,7 +3166,7 @@ wheels = [
 [[package]]
 name = "olmoearth-pretrain"
 version = "0.0.1"
-source = { git = "ssh://git@github.com/allenai/olmoearth_pretrain.git?rev=main#cd2e2f35ec232f826a93f1df7b3a6819df044da6" }
+source = { git = "https://github.com/allenai/olmoearth_pretrain.git?rev=main#cd2e2f35ec232f826a93f1df7b3a6819df044da6" }
 dependencies = [
     { name = "ai2-olmo-core" },
     { name = "albumentations" },
@@ -3220,8 +3220,8 @@ olmoearth-run = [
 requires-dist = [
     { name = "interrogate", marker = "extra == 'dev'", specifier = ">=1.7.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.17.1,<2" },
-    { name = "olmoearth-pretrain", marker = "extra == 'olmoearth-pretrain'", git = "ssh://git@github.com/allenai/olmoearth_pretrain.git?rev=main" },
-    { name = "olmoearth-run", marker = "extra == 'olmoearth-run'", git = "ssh://git@github.com/allenai/olmoearth_run.git?rev=develop" },
+    { name = "olmoearth-pretrain", marker = "extra == 'olmoearth-pretrain'", git = "https://github.com/allenai/olmoearth_pretrain.git?rev=main" },
+    { name = "olmoearth-run", marker = "extra == 'olmoearth-run'", git = "https://github.com/allenai/olmoearth_run.git?rev=develop" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.3.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2" },
     { name = "pytest-dotenv", marker = "extra == 'dev'" },
@@ -3238,7 +3238,7 @@ provides-extras = ["dev", "olmoearth-pretrain", "olmoearth-run"]
 [[package]]
 name = "olmoearth-run"
 version = "0.1.0"
-source = { git = "ssh://git@github.com/allenai/olmoearth_run.git?rev=develop#9a315758f026e4baaae377f1ec03ace75582eb02" }
+source = { git = "https://github.com/allenai/olmoearth_run.git?rev=develop#9a315758f026e4baaae377f1ec03ace75582eb02" }
 dependencies = [
     { name = "fsspec", extra = ["gcs", "s3"] },
     { name = "geojson-pydantic" },
