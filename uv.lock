@@ -3238,7 +3238,7 @@ provides-extras = ["dev", "olmoearth-pretrain", "olmoearth-run"]
 [[package]]
 name = "olmoearth-run"
 version = "0.1.0"
-source = { git = "https://github.com/allenai/olmoearth_run.git?rev=develop#9a315758f026e4baaae377f1ec03ace75582eb02" }
+source = { git = "https://github.com/allenai/olmoearth_run.git?rev=develop#13011ee203bc7c6bba058192071ac98ea4b3f79d" }
 dependencies = [
     { name = "fsspec", extra = ["gcs", "s3"] },
     { name = "geojson-pydantic" },
