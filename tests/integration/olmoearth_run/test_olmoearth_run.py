@@ -108,7 +108,11 @@ def test_olmoearth_run_solar_farm(
         checkpoint_path=checkpoint_path,
     )
 
-    result_fname = scratch_dir / "results" / "results_raster" / "result_0.tif"
+    result_dir = scratch_dir / "results" / "results_raster"
+    assert result_dir.exists()
+    result_fnames = list(result_dir.glob("*.tif"))
+    assert len(result_fnames) == 1
+    result_fname = result_fnames[0]
     assert result_fname.exists()
     with rasterio.open(result_fname) as raster:
         array = raster.read()
