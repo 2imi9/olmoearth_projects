@@ -89,6 +89,7 @@ data:
     predict_config:
       load_all_patches: true
       patch_size: 32
+      overlap_ratio: 0.125  # 4 / 32
       skip_targets: true
       transforms:
         - class_path: rslp.olmoearth_prertain.norm.OlmoEarthNormalize
@@ -125,3 +126,12 @@ trainer:
         path: ${DATASET_PATH}
         output_layer: ${PREDICTION_OUTPUT_LAYER}
         selector: ["value"]
+    - class_path: rslearn.train.prediction_writer.RslearnWriter
+      init_args:
+        path: placeholder
+        output_layer: ${PREDICTION_OUTPUT_LAYER}
+        selector: ["class"]
+        merger:
+          class_path: rslearn.train.prediction_writer.RasterMerger
+          init_args:
+            padding: 2
