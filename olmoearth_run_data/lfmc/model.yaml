@@ -67,7 +67,7 @@ data:
     default_config:
       patch_size: 32
       transforms:
-        - class_path: rslearn.models.olmoearth_prertain.norm.OlmoEarthNormalize
+        - class_path: rslearn.models.olmoearth_pretrain.norm.OlmoEarthNormalize
           init_args:
             band_names:
               sentinel1: ["vv", "vh"]
@@ -87,9 +87,10 @@ data:
     predict_config:
       load_all_patches: true
       patch_size: 32
+      overlap_ratio: 0.125  # 4 / 32
       skip_targets: true
       transforms:
-        - class_path: rslearn.models.olmoearth_prertain.norm.OlmoEarthNormalize
+        - class_path: rslearn.models.olmoearth_pretrain.norm.OlmoEarthNormalize
           init_args:
             band_names:
               sentinel1: ["vv", "vh"]
@@ -123,3 +124,7 @@ trainer:
         path: ${DATASET_PATH}
         output_layer: ${PREDICTION_OUTPUT_LAYER}
         selector: ["value"]
+        merger:
+          class_path: rslearn.train.prediction_writer.RasterMerger
+          init_args:
+            padding: 2

@@ -28,7 +28,7 @@ partition_strategies:
   prepare_window_geometries:
     class_path: olmoearth_run.runner.tools.partitioners.grid_partitioner.GridPartitioner
     init_args:
-      grid_size: 64
+      grid_size: 1024
       output_projection:
         class_path: rslearn.utils.geometry.Projection
         init_args:
