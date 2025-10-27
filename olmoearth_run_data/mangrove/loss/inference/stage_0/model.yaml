@@ -9,13 +9,8 @@ model:
         encoder:
         - class_path: rslearn.models.olmoearth_pretrain.model.OlmoEarth
           init_args:
-            checkpoint_path: ${EXTRA_FILES_PATH}/step300000
-            selector:
-            - encoder
-            forward_kwargs:
+              model_id: OLMOEARTH_V1_BASE
               patch_size: 2
-            random_initialization: true
-            autocast_dtype: bfloat16
         decoders:
           mangrove_classification:
           - class_path: rslearn.models.pooling_decoder.SegmentationPoolingDecoder
@@ -26,6 +21,7 @@ model:
               num_fc_layers: 0
               conv_channels: 128
               fc_channels: 512
+              image_key: "sentinel2_l2a"
           - class_path: rslearn.train.tasks.segmentation.SegmentationHead
         lazy_decode: false
         loss_weights: null
