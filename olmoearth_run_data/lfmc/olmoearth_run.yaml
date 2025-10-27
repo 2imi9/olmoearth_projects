@@ -11,9 +11,9 @@ window_prep:
   data_splitter:
     class_path: olmoearth_run.runner.tools.data_splitters.spatial_data_splitter.SpatialDataSplitter
     init_args:
-      train_prop: 0.8
+      train_prop: 0.7
       val_prop: 0.2
-      test_prop: 0.0
+      test_prop: 0.1
       grid_size: 128  # in pixels
   label_layer: "labels"
   group_name: "spatial_split"
