@@ -158,4 +158,41 @@ We have released model checkpoints for each of the fine-tuned models in this
 repository, but you can reproduce the model by fine-tuning the pre-trained OlmoEarth
 checkpoint on each task training dataset.
 
-TODO
+First, consult the per-model documentation above for the URL of the rslearn dataset tar
+file, and download and extract it. For example, for the LFMC model:
+
+```
+wget https://huggingface.co/datasets/allenai/olmoearth_projects_lfmc/blob/main/dataset.tar
+tar xvf dataset.tar
+```
+
+Set environment variables expected by the fine-tuning procedure (uses W&B)
+
+```
+export DATASET_PATH=/path/to/extracted/data/
+export NUM_WORKERS=32
+export TRAINER_DATA_PATH=./trainer_data
+export PREDICTION_OUTPUT_LAYER=output
+export WANDB_NAME=olmoearth_projects
+export WANDB_PROJECT=my_training_run
+export WANDB_ENTITY=...
+```
+
+Then run fine-tuning using the model configuration file in the `olmoearth_run_data`,
+e.g.:
+
+```
+rslearn model fit --config olmoearth_run_data/lfmc/model.yaml
+```
+
+Losses and metrics should then be logged to your W&B. The checkpoint would be saved in
+the TRAINER_DATA_PATH (e.g. `./trainer_data`); two checkpoints should be saved, the
+latest checkpoint (`last.ckpt`) and the best checkpoint (`epoch=....ckpt`). You can use
+the best checkpoint for the Applying Existing Models section in lieu of the checkpoint
+that we proivde.
+
+If training fails halfway, you can resume it from `last.ckpt`:
+
+```
+rslearn model fit --config olmoearth_run_data/lfmc/model.yaml --ckpt_path $TRAINER_DATA_PATH/last.ckpt
+```
