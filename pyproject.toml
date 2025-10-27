@@ -47,7 +47,6 @@ include = ["olmoearth_projects*"]
 
 [tool.uv.sources]
 olmoearth_pretrain = { git = "https://github.com/allenai/olmoearth_pretrain.git", branch = "main" }
-olmoearth_run = { git = "https://github.com/allenai/olmoearth_run.git", branch = "develop" }
 
 [tool.ruff]
 fix = true
