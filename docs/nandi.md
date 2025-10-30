@@ -1,6 +1,6 @@
-## Nandi Land Cover and Crop Type Mapping
+## Nandi Crop Type Mapping
 
-OlmoEarth-v1-FT-Nandi-Base is a model fine-tuned from OlmoEarth-v1-Base for predicting land cover and crop types across the Nandi county in Kenya using Sentinel-2 satellite images.
+OlmoEarth-v1-FT-Nandi-Base is a model fine-tuned from OlmoEarth-v1-Base for predicting crop and land-cover type across the Nandi county in Kenya using Sentinel-2 satellite images.
 
 Here are relevant links for fine-tuning and applying the model per the documentation in
 [the main README](../README.md):
@@ -13,17 +13,23 @@ Here are relevant links for fine-tuning and applying the model per the documenta
 
 The model inputs twelve timesteps of satellite image data, one [Sentinel-2 L2A](https://planetarycomputer.microsoft.com/dataset/sentinel-2-l2a) mosaic per 30-day period.
 
-The model is trained to predict land cover and crop type for every pixel within each 16×16 input patches.
+The model is trained to predict crop and land-cover type for every pixel within each 16×16 input patches.
 
 It achieves an overall accuracy of 87.3% on our validation set.
 
 ## Training Data
 
+The model is trained on ground-truth labels collected by [CGIAR/IFPRI](https://www.ifpri.org/). The original dataset includes 819 labeled polygons, from which we sampled training points. To improve coverage, we added extra point samples from ESA WorldCover (since the original dataset lacked Water and Built-up classes) and additional Tree samples annotated in the Studio to correct misclassification of natural forest areas as Coffee.
 
+In total, the dataset covers 10 categories: coffee, maize, sugarcane, tea, vegetables, legumes, grassland, trees, water, and built-up.
+
+Each sample includes its longitude, latitude, time range (2022-09 to 2023-09), and crop or land-cover type. For each sample, we generate an rslearn window centered on the location, covering one year of data. We use rslearn to obtain twelve Sentinel-2 and Sentinel-1 imagery during that time range, with one per 30-day period.
+
+The dataset is split spatially into training (75%) and validation (25%) sets, based on a 128×128-pixel grid hashed into the two splits.
 
 ## Inference
 
-TODO
+Inference is documented in [the main README](../README.md).
 
 ## Fine-tuning
 
