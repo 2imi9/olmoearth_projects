@@ -86,7 +86,7 @@ To run inference:
 ```
 mv prediction_request_geometry.geojson olmoearth_run_data/forest_loss_driver/prediction_request_geometry.geojson
 mkdir -p ./checkpoints
-wget -O checkpoints/forest_loss_driver.ckpt https://huggingface.co/allenai/OlmoEarth-v1-FT-ForestLossDriver-Base/blob/main/model.ckpt
+wget -O checkpoints/forest_loss_driver.ckpt https://huggingface.co/allenai/OlmoEarth-v1-FT-ForestLossDriver-Base/resolve/main/model.ckpt
 export NUM_WORKERS=32
 export WANDB_PROJECT=forest_loss_driver
 export WANDB_NAME=forest_loss_driver
