@@ -20,7 +20,7 @@ Sentinel-2 images are available).
 It processes each 32x32 crop of the input image separately, and predicts the
 predominant ecosystem type in each crop.
 
-It achieves TODO.
+It achieves 61.6% accuracy on our test set.
 
 ## Training Data
 
