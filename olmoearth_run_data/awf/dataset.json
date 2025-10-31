@@ -11,6 +11,17 @@
       ],
       "type": "raster"
     },
+    "output": {
+      "band_sets": [
+        {
+          "bands": [
+            "output"
+          ],
+          "dtype": "float32"
+        }
+      ],
+      "type": "raster"
+    },
     "sentinel1": {
       "band_sets": [
         {

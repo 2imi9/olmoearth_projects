@@ -38,7 +38,7 @@ The dataset is split spatially into training (75%) and validation (25%) sets, ba
 
 ## Inference
 
-Inference is documented in [the main README](../README.md).
+Inference is documented in [the main README](../README.md). The prediction request geometry should have start and end timestamps that covers one year, ideally from 2022-09-01 to 2023-09-01 to match the training data. However, you can also run inference for other one-year periods, such as 2018-09-01 to 2019-09-01.
 
 ## Fine-tuning
 
