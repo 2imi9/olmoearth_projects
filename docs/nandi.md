@@ -15,7 +15,16 @@ The model inputs twelve timesteps of satellite image data, one [Sentinel-2 L2A](
 
 The model is trained to predict crop and land-cover type for every pixel within each 16×16 input patches.
 
-It achieves an overall accuracy of 87.3% on our validation set.
+It achieves an overall accuracy of 87.3% on our validation set. The table below summarizes our experiments with different patch sizes and input modalities. Overall, mnodels using patch size 1 perform the best.
+
+| Window Size | Patch Size | Modalities | Accuracy (%) |
+|--------------|-------------|-------------|---------------|
+| 16×16 | 1 | Sentinel-2 | 87.3 |
+| 16×16 | 1 | Sentinel-2 + Sentinel-1 | 87.2 |
+| 16×16 | 2 | Sentinel-2 | 86.5 |
+| 16×16 | 2 | Sentinel-2 + Sentinel-1 | 86.7 |
+| 16×16 | 4 | Sentinel-2 | 81.9 |
+| 16×16 | 4 | Sentinel-2 + Sentinel-1 | 82.2 |
 
 ## Training Data
 
