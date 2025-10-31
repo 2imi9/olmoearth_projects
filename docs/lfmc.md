@@ -21,7 +21,7 @@ mosaic per 14-day period.
 
 At each pixel, it regresses the LFMC of woody vegetation.
 
-It achieves a mean squared error of 580.5 on our validation set.
+It achieves a mean squared error of 580.6 on our test set.
 
 ## Training Data
 
