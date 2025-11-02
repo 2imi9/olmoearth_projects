@@ -9,7 +9,6 @@ Here are relevant links for fine-tuning and applying the model per the documenta
 [the main README](../README.md):
 
 - Model checkpoint: https://huggingface.co/allenai/OlmoEarth-v1-FT-EcosystemTypeMapping-Base/blob/main/model.ckpt
-- rslearn dataset: https://huggingface.co/datasets/allenai/olmoearth_projects_lfmc/blob/main/dataset.tar
 
 ## Model Details
 
@@ -35,7 +34,3 @@ obtain the Sentinel-2 30-day mosaics; images from the preceding 90 days may be u
 there are some 30-day periods during the 180-day time range with no Sentinel-2
 coverage. The end timestamp won't be used and can be set arbitrarily, e.g. set 180 days
 after the start timestamp.
-
-## Fine-tuning
-
-Fine-tuning is documented in [the main README](../README.md).
