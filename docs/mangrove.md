@@ -18,9 +18,6 @@ mosaic per 30-day period.
 At every 2 by 2 patch it outputs a classification of mangrove, water or other.
 
 The model achieves strong performance on the validation set with an overall accuracy of 97.6%.
-Mangrove classification achieves the F1 score of 98.7% (precision: 98.5%, recall: 99.0%),
-followed by Water with an F1 score of 97.1% (precision: 96.5%, recall: 97.7%),
-and Other with an F1 score of 96.3% (precision: 97.1%, recall: 95.4%).
 
 
 ## Training Data
@@ -30,8 +27,8 @@ The model is trained on data provided by Global Mangrove Watch available at http
 
 Each sample in the dataset specifies a longitude, latitude, a start and end time (1 year apart), and a class label. For each sample we create a 12 month time series of Sentinel 2 data within the time bounds.
 
-We split the dataset into train, val, and test splits spatially, where each 1024 by 1024  pixel
-grid cells are assigned via hash to train (50%), val (25%), or test (25%).
+We split the dataset into train, val, splits , where each 2 by 2 pixel
+grid cells are assigned via hash to train (87.5%), val (12.5%).
 
 ## Inference
 
