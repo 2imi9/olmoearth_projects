@@ -7,13 +7,10 @@ model:
         encoder:
           - class_path: rslearn.models.olmoearth_pretrain.model.OlmoEarth
             init_args:
-                #model_id: OLMOEARTH_V1_BASE
-                checkpoint_path: /weka/dfive-default/helios/checkpoints/joer/phase2.0_base_lr0.0001_wd0.02/step667200
-                #model_path: ${EXTRA_FILES_PATH}
-                #checkpoint_path: ${EXTRA_FILES_PATH}
+                model_id: "OLMOEARTH_V1_BASE"
+                #checkpoint_path: your_pretrained_checkpoint_path_if_not_using_model_id
+                patch_size: 4
                 selector: ["encoder"]
-                forward_kwargs:
-                  patch_size: 4
         decoders:
           burnscar_segmentation:
           - class_path: rslearn.models.unet.UNetDecoder
@@ -109,15 +106,17 @@ trainer:
         logging_interval: "epoch"
     - class_path: lightning.pytorch.callbacks.ModelCheckpoint
       init_args:
-        dirpath: ${TRAINER_DATA_PATH}  # this is where intermediate checkpoinst will end up
+        # Save both the latest checkpoint (last.ckpt) and the best one (epoch=....ckpt).
+        dirpath: ${TRAINER_DATA_PATH}
         save_top_k: 1
         save_last: true
         monitor: val_loss
         mode: min
+        # It is recommended to freeze the OlmoEarth encoder for the first few epochs.
     - class_path: rslearn.train.callbacks.freeze_unfreeze.FreezeUnfreeze
       init_args:
         module_selector: ["model", "encoder", 0]
-        unfreeze_at_epoch: 20
+        unfreeze_at_epoch: 10
         unfreeze_lr_factor: 10
     - class_path: rslearn.train.prediction_writer.RslearnWriter
       init_args:
@@ -128,6 +127,7 @@ trainer:
           class_path: rslearn.train.prediction_writer.RasterMerger
           init_args:
             padding: 8
+  # Optional section to save charts to W&B.
   logger:
     class_path: lightning.pytorch.loggers.WandbLogger
     init_args:
