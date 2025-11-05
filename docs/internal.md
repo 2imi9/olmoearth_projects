@@ -21,3 +21,7 @@ which is an older version of the dataset.
 ### Mangrove Classification
 
 - Dataset used for training: `/weka/dfive-default/rslearn-eai/datasets/mangrove/classification/20250626/`
+
+### Solar Farm Segmentation
+
+- Dataset used for training: `/weka/dfive-default/rslearn-eai/datasets/solar_farm/dataset_v1/20250605/`
