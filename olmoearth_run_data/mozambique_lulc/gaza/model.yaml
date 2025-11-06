@@ -7,7 +7,9 @@ model:
         encoder:
           - class_path: rslearn.models.olmoearth_pretrain.model.OlmoEarth
             init_args:
-              model_id: OLMOEARTH_V1_BASE
+              checkpoint_path: ${EXTRA_FILES_PATH}
+              random_initialization: true
+              selector: ["encoder"]
               patch_size: 1
         decoders:
           segment:
@@ -259,4 +261,3 @@ trainer:
           class_path: rslearn.train.prediction_writer.RasterMerger
           init_args:
             padding: 2
-# unused: ${EXTRA_FILES_PATH}
