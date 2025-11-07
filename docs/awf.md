@@ -38,6 +38,8 @@ The dataset is split spatially into training (75%) and validation (25%) sets, ba
 
 Inference is documented in [the main README](../README.md). The prediction request geometry should have start and end timestamps that covers one year, ideally from 2023-01-01 to 2023-12-31 to match the training data. Inference runs on all 1024×1024 grid cells intersecting the geometry, using satellite images from the specified time range.
 
+Here's the [inference output](https://olmoearth.allenai.org/prediction/1b3eb442-da7b-4920-9265-1c853550d6a2#8.87/-2.9277/37.3573) for the Amboseli national park region.
+
 ## Fine-tuning
 
 Fine-tuning is documented in [the main README](../README.md).
