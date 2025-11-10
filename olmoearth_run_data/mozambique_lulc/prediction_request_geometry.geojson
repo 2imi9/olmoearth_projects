@@ -1,12 +1,6 @@
 {
-  "type": "FeatureCollection",
   "features": [
     {
-      "type": "Feature",
-      "properties": {
-        "oe_start_time": "2024-10-23T00:00:00+00:00",
-        "oe_end_time": "2025-05-07T00:00:00+00:00"
-      },
       "geometry": {
         "coordinates": [
           [
@@ -33,7 +27,13 @@
           ]
         ],
         "type": "Polygon"
-      }
+      },
+      "properties": {
+        "oe_end_time": "2025-05-07T00:00:00+00:00",
+        "oe_start_time": "2024-10-23T00:00:00+00:00"
+      },
+      "type": "Feature"
     }
-  ]
+  ],
+  "type": "FeatureCollection"
 }

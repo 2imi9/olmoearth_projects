@@ -3,7 +3,7 @@
 import argparse
 import multiprocessing
 from collections.abc import Iterable
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import geopandas as gpd
@@ -15,9 +15,8 @@ from rslearn.utils import Projection, STGeometry, get_utm_ups_crs
 from rslearn.utils.feature import Feature
 from rslearn.utils.mp import star_imap_unordered
 from rslearn.utils.vector_format import GeojsonVectorFormat
-from upath import UPath
-
 from rslp.utils.windows import calculate_bounds
+from upath import UPath
 
 WINDOW_RESOLUTION = 10
 LABEL_LAYER = "label"
@@ -35,16 +34,16 @@ CLASS_MAP = {
 # Per-province temporal coverage (UTC)
 PROVINCE_TIME = {
     "gaza": (
-        datetime(2024, 10, 23, tzinfo=timezone.utc),
-        datetime(2025, 5, 7, tzinfo=timezone.utc),
+        datetime(2024, 10, 23, tzinfo=UTC),
+        datetime(2025, 5, 7, tzinfo=UTC),
     ),
     "manica": (
-        datetime(2024, 11, 23, tzinfo=timezone.utc),
-        datetime(2025, 6, 7, tzinfo=timezone.utc),
+        datetime(2024, 11, 23, tzinfo=UTC),
+        datetime(2025, 6, 7, tzinfo=UTC),
     ),
     "zambezia": (
-        datetime(2024, 11, 23, tzinfo=timezone.utc),
-        datetime(2025, 6, 7, tzinfo=timezone.utc),
+        datetime(2024, 11, 23, tzinfo=UTC),
+        datetime(2025, 6, 7, tzinfo=UTC),
     ),
 }
 
