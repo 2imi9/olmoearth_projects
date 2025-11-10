@@ -26,7 +26,7 @@ These tutorials use all or a subset of the components of OlmoEarth:
 
 - [olmoearth_pretrain](https://github.com/allenai/olmoearth_pretrain/), the OlmoEarth
   pre-trained model.
-- [rslearn](https://github.com/alleani/rslearn/), our tool for obtaining satellite
+- [rslearn](https://github.com/allenai/rslearn/), our tool for obtaining satellite
   images and other geospatial data from online data sources, and for fine-tuning
   remote sensing foundation models.
 - [olmoearth_run](https://pypi.org/project/olmoearth-runner/), our higher-level

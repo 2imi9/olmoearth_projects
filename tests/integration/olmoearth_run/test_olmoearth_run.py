@@ -24,7 +24,7 @@ def test_olmoearth_run_solar_farm(
     """Test OlmoEarthRun pipeline by applying solar farm on small request geometry."""
     # For now this is fixed but we should figure out how to have standardized path for
     # each application later.
-    checkpoint_path = "gs://ai2-rslearn-projects-data/projects/2025_06_06_helios_finetuning/v2_satlas_solar_farm_128_ts_helios_per_mod_patchdisc_contrastive_fix_esrun/checkpoints/epoch=9999-step=99999.ckpt"
+    checkpoint_path = "gs://ai2-rslearn-projects-data/projects/2025_11_05_satlas_solar_farm/2025_11_05_model_update/epoch=9999-step=99999.ckpt"
 
     # Copy the configuration files. We use the tmp_path as the config dir that we will
     # initialize from since we will customize the request geometry.
@@ -91,15 +91,14 @@ def test_olmoearth_run_solar_farm(
     with (src_dir / "model.yaml").open() as f:
         model_config = yaml.safe_load(f)
     model_config["data"]["init_args"]["batch_size"] = 1
+    yaml_string = yaml.dump(model_config)
+    # Add comment to contain the needed but unused EXTRA_FILES_PATH template var.
+    yaml_string += "\n# unused: ${EXTRA_FILES_PATH}\n"
     with (config_dir / "model.yaml").open("w") as f:
-        yaml.safe_dump(model_config, f)
+        f.write(yaml_string)
 
     # Disable W&B for this test.
     monkeypatch.setenv("WANDB_MODE", "disabled")
-    # Set custom extra files directory that contains the requisite Helios config.
-    monkeypatch.setenv(
-        "EXTRA_FILES_PATH", "gs://ai2-rslearn-projects-data/helios/checkpoints/"
-    )
 
     scratch_dir = tmp_path / "scratch"
     olmoearth_run(
