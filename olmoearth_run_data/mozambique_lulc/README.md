@@ -34,6 +34,12 @@ Within `/weka/dfive-default/rslearn-eai/datasets/crop/mozambique_lulc` there are
 	- Manica: 1,564 / 353 / 822
 	- Zambezia: 949 / 276 / 525
 
+Finally - we treat this as a segmentation task, not as a classification task (this makes inference faster, without hurting performance). This means the point labels need to be transformed into rasters:
+
+```
+python olmoearth_projects/projects/mozambique_lulc/create_label_raster.py --ds_path /weka/dfive-default/rslearn-eai/datasets/crop/mozambique_lulc/20251113
+```
+
 ### Finetuning
 
 Currently, we use [rslearn_projects](github.com/allenai/rslearn_projects) for finetuning, using the [rslp_finetuning.yaml](rslp_finetuning.yaml). To run finetune for a specific province, update the yaml's `groups` (lines 238-250) from `"gaza"` to one of `["gaza", "manica", "zambezia"]`. With `rslean_projects` installed (and access to Beaker), finetuning can then be run with the following command:
