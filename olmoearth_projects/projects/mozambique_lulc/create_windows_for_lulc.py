@@ -18,7 +18,6 @@ from rslearn.utils import Projection, STGeometry, get_utm_ups_crs
 from rslearn.utils.feature import Feature
 from rslearn.utils.mp import star_imap_unordered
 from rslearn.utils.vector_format import GeojsonVectorFormat
-from rslp.utils.windows import calculate_bounds
 from upath import UPath
 
 WINDOW_RESOLUTION = 10
@@ -49,6 +48,39 @@ PROVINCE_TIME = {
         datetime(2025, 6, 7, tzinfo=UTC),
     ),
 }
+
+
+def calculate_bounds(
+    geometry: STGeometry, window_size: int
+) -> tuple[int, int, int, int]:
+    """Calculate the bounds of a window around a geometry.
+
+    Args:
+        geometry: the geometry to calculate the bounds of.
+        window_size: the size of the window.
+
+    Copied from
+    https://github.com/allenai/rslearn_projects/blob/master/rslp/utils/windows.py
+    """
+    if window_size <= 0:
+        raise ValueError("Window size must be greater than 0")
+
+    if window_size % 2 == 0:
+        bounds = (
+            int(geometry.shp.x) - window_size // 2,
+            int(geometry.shp.y) - window_size // 2,
+            int(geometry.shp.x) + window_size // 2,
+            int(geometry.shp.y) + window_size // 2,
+        )
+    else:
+        bounds = (
+            int(geometry.shp.x) - window_size // 2,
+            int(geometry.shp.y) - window_size // 2 - 1,
+            int(geometry.shp.x) + window_size // 2 + 1,
+            int(geometry.shp.y) + window_size // 2,
+        )
+
+    return bounds
 
 
 def process_gpkg(gpkg_path: UPath) -> gpd.GeoDataFrame:
