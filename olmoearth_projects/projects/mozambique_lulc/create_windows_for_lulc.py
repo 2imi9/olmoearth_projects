@@ -38,14 +38,14 @@ CLASS_MAP = {
 GROUP_TIME = {
     "gaza": (
         datetime(2024, 10, 23, tzinfo=UTC),
-        datetime(2025, 5, 7, tzinfo=UTC),
+        datetime(2025, 6, 7, tzinfo=UTC),
     ),
     "manica": (
-        datetime(2024, 11, 23, tzinfo=UTC),
+        datetime(2024, 10, 23, tzinfo=UTC),
         datetime(2025, 6, 7, tzinfo=UTC),
     ),
     "zambezia": (
-        datetime(2024, 11, 23, tzinfo=UTC),
+        datetime(2024, 10, 23, tzinfo=UTC),
         datetime(2025, 6, 7, tzinfo=UTC),
     ),
     # for crop type, we will train a single model
