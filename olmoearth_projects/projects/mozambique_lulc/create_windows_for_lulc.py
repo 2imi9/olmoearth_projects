@@ -111,7 +111,7 @@ def process_gpkg(gpkg_path: UPath, crop_type: bool) -> gpd.GeoDataFrame:
 
 def iter_points(
     gdf: gpd.GeoDataFrame, crop_type: bool
-) -> Iterable[tuple[int, float, float, int]]:
+) -> Iterable[tuple[int, float, float, int | str]]:
     """Yield (fid, latitude, longitude, category) per feature using centroid for polygons."""
     for fid, row in gdf.iterrows():
         geom = row.geometry
@@ -129,7 +129,7 @@ def iter_points(
 
 
 def create_window(
-    rec: tuple[int, float, float, int],
+    rec: tuple[int, float, float, int | str],
     ds_path: UPath,
     group_name: str,
     split: str,
@@ -140,7 +140,11 @@ def create_window(
 ) -> None:
     """Create a single window and write label layer."""
     fid, latitude, longitude, category_id = rec
-    if not crop_type:
+    if crop_type:
+        category_label = category_id
+    else:
+        if not isinstance(category_id, int):
+            raise ValueError(f"{category_id} should be int in the non crop-type case.")
         category_label = CLASS_MAP.get(category_id, f"Unknown_{category_id}")
 
     # Geometry/projection
