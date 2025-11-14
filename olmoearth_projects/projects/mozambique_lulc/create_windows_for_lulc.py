@@ -33,15 +33,6 @@ CLASS_MAP = {
     6: "Buildings",
 }
 
-CROP_TYPE_MAP = {
-    0: "corn",
-    1: "cassava",
-    2: "rice",
-    3: "sesame",
-    4: "beans",
-    5: "millet",
-    6: "sorghum",
-}
 
 # Per-province temporal coverage (UTC)
 GROUP_TIME = {
@@ -131,7 +122,9 @@ def iter_points(
         else:
             pt = geom.centroid
         lon, lat = float(pt.x), float(pt.y)
-        category = int(row["crop1"]) if crop_type else int(row["class"])
+        # the crop type labels are strings, the lulc labels are ints which
+        # map to classes
+        category = row["crop1"] if crop_type else int(row["class"])
         yield fid, lat, lon, category
 
 
@@ -147,9 +140,7 @@ def create_window(
 ) -> None:
     """Create a single window and write label layer."""
     fid, latitude, longitude, category_id = rec
-    if crop_type:
-        category_label = CROP_TYPE_MAP.get(category_id, f"Unknown_{category_id}")
-    else:
+    if not crop_type:
         category_label = CLASS_MAP.get(category_id, f"Unknown_{category_id}")
 
     # Geometry/projection
