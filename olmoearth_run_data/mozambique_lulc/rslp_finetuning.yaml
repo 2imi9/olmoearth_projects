@@ -20,7 +20,7 @@ model:
           segment:
           - class_path: rslearn.models.upsample.Upsample
             init_args:
-              scale_factor: 4
+              scale_factor: 1
               mode: bilinear
           - class_path: rslearn.models.conv.Conv
             init_args:
