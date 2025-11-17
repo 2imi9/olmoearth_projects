@@ -69,7 +69,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = Dataset(UPath(args.ds_path))
-    windows = dataset.load_windows(workers=args.workers, show_progress=True)
+    windows = dataset.load_windows(show_progress=True)
     output_dict: dict[str, dict[str, int]] = {}
     for window in windows:
         split = window.options["split"]
