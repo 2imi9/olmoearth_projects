@@ -27,7 +27,7 @@ from rslearn.utils.raster_format import GeotiffRasterFormat
 from rslearn.utils.vector_format import GeojsonVectorFormat
 from upath import UPath
 
-CLASS_NAMES = [
+LULC_CLASS_NAMES = [
     "invalid",
     "Water",
     "Bare Ground",
@@ -36,6 +36,16 @@ CLASS_NAMES = [
     "Trees",
     "Cropland",
     "Buildings",
+]
+CROPTYPE_CLASS_NAMES = [
+    "invalid",
+    "corn",
+    "cassava",
+    "rice",
+    "sesame",
+    "beans",
+    "millet",
+    "sorghum",
 ]
 PROPERTY_NAME = "category"
 BAND_NAME = "label"
@@ -48,7 +58,10 @@ def create_label_raster(window: Window) -> None:
         label_dir, window.projection, window.bounds
     )
     class_name = features[0].properties[PROPERTY_NAME]
-    class_id = CLASS_NAMES.index(class_name)
+    try:
+        class_id = LULC_CLASS_NAMES.index(class_name)
+    except ValueError:
+        class_id = CROPTYPE_CLASS_NAMES.index(class_name)
 
     # Draw the class_id in the middle 1x1 of the raster.
     raster = np.zeros(
