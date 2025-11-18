@@ -39,12 +39,6 @@ model:
         lazy_decode: false
         loss_weights: null
         trunk: null
-    restore_config:
-      restore_path: /weka/dfive-default/rslearn-eai/projects/2025_09_18_mozambique_lulc/lulc_combined_20251118_monitoracc_v2/checkpoints/epoch=32-step=35607.ckpt
-      remap_prefixes:
-        - ["model.", ""]
-      ignore_prefixes: ["model.decoders"]
-      selector: ["state_dict"]
     lr: 0.0001
     scheduler:
       class_path: rslearn.train.scheduler.PlateauScheduler
