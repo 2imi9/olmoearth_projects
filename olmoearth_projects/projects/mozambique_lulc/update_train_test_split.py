@@ -10,6 +10,9 @@ from olmoearth_run.runner.tools.data_splitters.data_splitter_interface import (
 from olmoearth_run.runner.tools.data_splitters.random_data_splitter import (
     RandomDataSplitter,
 )
+from olmoearth_run.runner.tools.data_splitters.spatial_data_splitter import (
+    SpatialDataSplitter,
+)
 from rslearn.dataset.dataset import Dataset
 from rslearn.dataset.window import Window
 from rslearn.utils.mp import star_imap_unordered
@@ -37,17 +40,27 @@ if __name__ == "__main__":
     parser.add_argument(
         "--workers",
         type=int,
-        default=64,
+        default=1,
         help="Number of worker processes to use",
+    )
+    parser.add_argument(
+        "--splitter",
+        type=str,
+        default="spatial",
+        help="Data splitter to use",
     )
     args = parser.parse_args()
 
+    if args.splitter == "spatial":
+        splitter = SpatialDataSplitter(
+            train_prop=0.8, val_prop=0.2, test_prop=0.0, grid_size=32
+        )
+    elif args.splitter == "random":
+        splitter = RandomDataSplitter(train_prop=0.8, val_prop=0.2, test_prop=0.0)
+
     dataset = Dataset(UPath(args.ds_path))
     windows = dataset.load_windows(workers=args.workers, show_progress=True)
-    splitter = RandomDataSplitter(train_prop=0.8, val_prop=0.2, test_prop=0.0)
-    # splitter = SpatialDataSplitter(
-    #     train_prop=0.8, val_prop=0.2, test_prop=0.0, grid_size=32
-    # )
+
     if args.workers <= 1:
         for window in tqdm.tqdm(windows):
             update_train_val_split(window, splitter)
