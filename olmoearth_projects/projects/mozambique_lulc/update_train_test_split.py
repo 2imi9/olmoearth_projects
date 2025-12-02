@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     dataset = Dataset(UPath(args.ds_path))
     windows = dataset.load_windows(workers=args.workers, show_progress=True)
-    splitter = RandomDataSplitter(train_prop=0.8, val_prop=0.2, test_prop=0.0)
+    splitter = RandomDataSplitter(train_prop=0.9, val_prop=0.1, test_prop=0.0)
     # splitter = SpatialDataSplitter(
     #     train_prop=0.8, val_prop=0.2, test_prop=0.0, grid_size=32
     # )
