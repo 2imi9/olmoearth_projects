@@ -12,9 +12,6 @@ import tqdm
 from olmoearth_run.runner.tools.data_splitters.data_splitter_interface import (
     DataSplitterInterface,
 )
-from olmoearth_run.runner.tools.data_splitters.random_data_splitter import (
-    RandomDataSplitter,
-)
 from olmoearth_run.runner.tools.data_splitters.spatial_data_splitter import (
     SpatialDataSplitter,
 )
@@ -233,12 +230,9 @@ def create_windows_from_gpkg(
     gdf = process_gpkg(gpkg_path, crop_type)
     records = list(iter_points(gdf, crop_type))
 
-    if crop_type:
-        splitter = RandomDataSplitter(train_prop=0.8, val_prop=0.2, test_prop=0.0)
-    else:
-        splitter = SpatialDataSplitter(
-            train_prop=0.8, val_prop=0.2, test_prop=0.0, grid_size=32
-        )
+    splitter = SpatialDataSplitter(
+        train_prop=0.9, val_prop=0.1, test_prop=0.0, grid_size=32
+    )
 
     jobs = [
         dict(

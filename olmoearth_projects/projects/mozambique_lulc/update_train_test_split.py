@@ -49,6 +49,7 @@ if __name__ == "__main__":
         default="spatial",
         help="Data splitter to use",
     )
+    parser.add_argument("--crop_type", action="store_true", default=False)
     args = parser.parse_args()
 
     if args.splitter == "spatial":
@@ -59,7 +60,13 @@ if __name__ == "__main__":
         splitter = RandomDataSplitter(train_prop=0.9, val_prop=0.1, test_prop=0.0)
 
     dataset = Dataset(UPath(args.ds_path))
-    windows = dataset.load_windows(workers=args.workers, show_progress=True)
+    if args.crop_type:
+        groups = ["crop_type"]
+    else:
+        groups = ["gaza", "manica", "zambezia"]
+    windows = dataset.load_windows(
+        workers=args.workers, show_progress=True, groups=groups
+    )
 
     if args.workers <= 1:
         for window in tqdm.tqdm(windows):
