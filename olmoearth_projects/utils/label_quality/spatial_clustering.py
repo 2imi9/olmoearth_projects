@@ -27,7 +27,7 @@ def relative_haversine(
     return torch.arcsin(torch.sqrt(a))
 
 
-def spatial_clustering(df: gpd.GeoDataFrame, k: int = 5) -> float:
+def spatial_clustering(df: gpd.GeoDataFrame, k: int = 5) -> dict[str | int, float]:
     """Spatial KNN.
 
     Given a dataset of labels with two columns (`label` and `geometry`),
@@ -49,11 +49,9 @@ def spatial_clustering(df: gpd.GeoDataFrame, k: int = 5) -> float:
     # if labels are floats, then its a regression. If labels are ints or strings,
     # its classification
     regression = True
-    if type(labels[0]) is str:
+    if (type(labels[0]) is str) or (labels.astype(int) == labels).all():
         regression = False
-        labels, _ = pd.factorize(labels)
-    elif (labels.astype(int) == labels).all():
-        regression = False
+        labels, unique = pd.factorize(labels)
 
     all_preds = []
     for i in range(features.shape[0]):
@@ -68,11 +66,24 @@ def spatial_clustering(df: gpd.GeoDataFrame, k: int = 5) -> float:
             all_preds.append(mode(labels[top_k_indices])[0])
         else:
             all_preds.append(labels[top_k_indices].mean())
-
+    all_preds_np = np.array(all_preds)
     if regression:
         # MSE error
-        print((labels - np.array(all_preds)) ** 2)
-        return sum((labels - np.array(all_preds)) ** 2) / len(labels)
+
+        return {"regression": sum((labels - all_preds_np) ** 2) / len(labels)}
     else:
-        # accuracy
-        return sum(labels == np.array(all_preds)) / len(labels)
+        output_dict: dict[str | int, float] = {}
+        # f1 score
+        for label_idx, label_value in enumerate(unique):
+            cat_labels = labels == label_idx
+            cat_preds = all_preds_np == label_idx
+            if sum(cat_preds) == 0:
+                # no instances received this value as a prediction
+                output_dict[label_value] = 0
+            else:
+                positives = cat_labels == 1
+                tp = sum(cat_labels[positives] == cat_preds[positives])
+                recall = tp / sum(cat_labels)
+                precision = tp / sum(cat_preds)
+                output_dict[label_value] = 2 / ((1 / recall) + (1 / precision))
+        return output_dict
