@@ -48,3 +48,20 @@ gdf = gpd.GeoDataFrame(
 )
 assert spatial_clustering(gdf[["label", "geometry"]], k=1) == 1
 ```
+
+### Spatial extent
+
+This function assesses how much of the total labelled area each class occupies.
+In general, we would like each class to occupy a large fraction of the total labelled area:
+
+```
+xoxoxox
+oxoxoxo
+xoxoxox
+```
+is more desirable then
+```
+x x x x
+ x xoxo
+x x xox
+```
