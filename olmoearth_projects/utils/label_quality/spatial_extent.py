@@ -11,8 +11,8 @@ def relative_area(bounds: tuple[float, float, float, float]) -> float:
     Since we are using ratios, we omit the R and 180 constants.
     """
     min_lon, min_lat, max_lon, max_lat = bounds
-    return np.cos(np.radians(max_lat)) - np.cos(np.radians(min_lat)) * (
-        np.radians(max_lon) - np.radians(min_lon)
+    return np.sin(np.radians(max_lat)) - np.sin(np.radians(min_lat)) * (
+        max_lon - min_lon
     )
 
 
