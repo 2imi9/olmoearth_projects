@@ -27,28 +27,6 @@ xxx
 We measure this by running a spatial KNN on the dataset - for each instance in the dataset, we define its class
 to be the mode of the K nearest (spatial) points. High accuracies indicate high spatial clustering.
 
-```python
-import geopandas as gpd
-import pandas as pd
-
-from olmoearth_projects.utils.label_quality.spatial_clustering import spatial_clustering
-
-df = pd.DataFrame(
-    {
-        "City": ["Buenos Aires", "Brasilia", "Santiago", "Bogota", "Caracas"],
-        "Country": ["Argentina", "Brazil", "Chile", "Colombia", "Venezuela"],
-        # highly clustered labels
-        "label": [0, 0, 0, 1, 1],
-        "Latitude": [-34.58, -15.78, -33.45, 4.60, 10.48],
-        "Longitude": [-58.66, -47.91, -70.66, -74.08, -66.86],
-    }
-)
-gdf = gpd.GeoDataFrame(
-    df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs="EPSG:4326"
-)
-assert spatial_clustering(gdf[["label", "geometry"]], k=1) == 1
-```
-
 ### Spatial extent
 
 This function assesses how much of the total labelled area each class occupies.
@@ -65,6 +43,11 @@ x x x x
  x xoxo
 x xoxox
 ```
+For each class, this is measured as `(area covered by all the labels in the class) / (area covered by all the labels)`.
+
+### Label imbalance
+
+This function assesses the fraction of labels belonging to each class: `(number of labels in a class) / (total number of labels)`.
 
 ### Examples
 
@@ -73,30 +56,30 @@ An example of how to run this is on an rslearn dataset is in [the `mozambique_lu
 ```console
 $ python olmoearth_projects/projects/mozambique_lulc/check_label_quality.py --ds_path /weka/dfive-default/rslearn-eai/datasets/crop/mozambique_lulc/20251202 --split train
 
-Checking label quality for 3821 instances.
-┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┓
-┃         Check name ┃ Metric     ┃                 Value ┃
-┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━┩
-│    label_imbalance │ beans      │     0.260664747448312 │
-│    label_imbalance │ corn       │   0.24522376341271918 │
-│    label_imbalance │ cassava    │   0.18503009683328972 │
-│    label_imbalance │ sesame     │   0.10049725202826486 │
-│    label_imbalance │ rice       │   0.18555352002093692 │
-│    label_imbalance │ sorghum    │  0.013609002878827532 │
-│    label_imbalance │ millet     │   0.00942161737764983 │
-│ spatial_clustering │ beans_f1   │    0.9885401096163426 │
-│ spatial_clustering │ corn_f1    │    0.9946581196581196 │
-│ spatial_clustering │ cassava_f1 │    0.9728571428571429 │
-│ spatial_clustering │ sesame_f1  │                   1.0 │
-│ spatial_clustering │ rice_f1    │    0.9943661971830987 │
-│ spatial_clustering │ sorghum_f1 │    0.9902912621359223 │
-│ spatial_clustering │ millet_f1  │                   1.0 │
-│     spatial_extent │ beans      │    0.7829124125842517 │
-│     spatial_extent │ corn       │    0.8357589381957512 │
-│     spatial_extent │ cassava    │    0.9383923435655623 │
-│     spatial_extent │ sesame     │ 0.0003614488654102921 │
-│     spatial_extent │ rice       │    0.7653946614854196 │
-│     spatial_extent │ sorghum    │ 3.266172530759744e-07 │
-│     spatial_extent │ millet     │ 0.0001509740414169792 │
-└────────────────────┴────────────┴───────────────────────┘
+Checking label quality for 4881 instances.
+┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┓
+┃         Check name ┃ Metric                ┃               Value ┃
+┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━┩
+│    label_imbalance │ Bare Ground           │ 0.12681827494365908 │
+│    label_imbalance │ Trees                 │ 0.09813562794509322 │
+│    label_imbalance │ Cropland              │ 0.27760704773611966 │
+│    label_imbalance │ Flooded Vegetation    │  0.1024380249948781 │
+│    label_imbalance │ Water                 │ 0.11391108379430445 │
+│    label_imbalance │ Rangeland             │ 0.10530628969473468 │
+│    label_imbalance │ Buildings             │  0.1757836508912108 │
+│ spatial_clustering │ Bare Ground_f1        │  0.7763055339049103 │
+│ spatial_clustering │ Trees_f1              │               0.918 │
+│ spatial_clustering │ Cropland_f1           │  0.8201489890031926 │
+│ spatial_clustering │ Flooded Vegetation_f1 │  0.6470588235294118 │
+│ spatial_clustering │ Water_f1              │  0.5609756097560976 │
+│ spatial_clustering │ Rangeland_f1          │  0.7097480832420592 │
+│ spatial_clustering │ Buildings_f1          │  0.9638554216867469 │
+│     spatial_extent │ Bare Ground           │   0.906388431021162 │
+│     spatial_extent │ Trees                 │  0.8143211426450099 │
+│     spatial_extent │ Cropland              │  0.8178565572914295 │
+│     spatial_extent │ Flooded Vegetation    │  0.8195186876112993 │
+│     spatial_extent │ Water                 │  0.8015534585021155 │
+│     spatial_extent │ Rangeland             │  0.9892764881988351 │
+│     spatial_extent │ Buildings             │  0.7256137393021044 │
+└────────────────────┴───────────────────────┴─────────────────────┘
 ```
