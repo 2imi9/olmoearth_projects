@@ -58,6 +58,11 @@ if __name__ == "__main__":
         )
     elif args.splitter == "random":
         splitter = RandomDataSplitter(train_prop=0.9, val_prop=0.1, test_prop=0.0)
+    else:
+        raise ValueError(
+            f"Unrecognized splitter {args.splitter}. "
+            "Expected one of {random, spatial}."
+        )
 
     dataset = Dataset(UPath(args.ds_path))
     if args.crop_type:
