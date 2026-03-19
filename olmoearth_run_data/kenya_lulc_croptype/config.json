@@ -3,16 +3,30 @@
     "label": {
       "type": "vector"
     },
-    "label_raster": {
+    "lulc_label_raster": {
       "band_sets": [
         {
           "bands": [
-            "label"
+            "lulc_label"
           ],
           "dtype": "int32"
         }
       ],
       "type": "raster"
+    },
+    "maize_label_raster": {
+      "band_sets": [
+        {
+          "bands": [
+            "maize_label"
+          ],
+          "dtype": "int32"
+        }
+      ],
+      "type": "raster"
+    },
+    "output": {
+      "type": "vector"
     },
     "sentinel2": {
       "band_sets": [
@@ -52,8 +66,8 @@
         "ingest": false,
         "name": "rslearn.data_sources.planetary_computer.Sentinel2",
         "query_config": {
-          "max_matches": 8,
-          "min_matches": 8,
+          "max_matches": 6,
+          "min_matches": 6,
           "period_duration": "30d",
           "space_mode": "PER_PERIOD_MOSAIC"
         },
@@ -61,9 +75,5 @@
       },
       "type": "raster"
     }
-  },
-  "tile_store": {
-    "name": "file",
-    "root_dir": "tiles"
   }
 }

@@ -1,13 +1,13 @@
 {
   "layers": {
-    "label": {
+    "cropland_label": {
       "type": "vector"
     },
-    "label_raster": {
+    "cropland_label_raster": {
       "band_sets": [
         {
           "bands": [
-            "label"
+            "cropland_label"
           ],
           "dtype": "int32"
         }
